@@ -1,7 +1,15 @@
-#define DEBOUNCE_UPDATE 100 
+#define DEBOUNCE_UPDATE 100
 #define T_DELAY1_MS 50
 #define T_DELAY2_US 500
 #define T_DELAY3_US 50
+
+typedef enum estado_t
+{
+  BOT_CERO,
+  BOT_UNO,
+  BOT_FALLING,
+  BOT_RISING
+};
 
 const int pinboton = 2;
 const int pinled = 13;
@@ -122,7 +130,7 @@ void loop()
 
 void debouncePullUp(int pinBoton, int *contador)
 {
-  static int estado;
+  static estado_t estado;
   static unsigned long millisTrigger = 0;
   unsigned long millisActual;
 
@@ -135,28 +143,28 @@ void debouncePullUp(int pinBoton, int *contador)
 
     switch (estado)
     {
-    case 0:
+    case BOT_CERO:
       if (pinEstado)
       {
-        estado = 3; //R
+        estado = BOT_RISING; //R
       }
       break;
 
-    case 1:
+    case BOT_UNO:
       if (pinEstado == 0)
       {
-        estado = 2; //F
+        estado = BOT_FALLING; //F
       }
       break;
 
-    case 2: //F
+    case BOT_FALLING: //F
       if (pinEstado)
       {
-        estado = 1;
+        estado = BOT_UNO;
       }
       else
       {
-        estado = 1;
+        estado = BOT_UNO;
         *contador += 1;
         if (*contador > 2)
         {
@@ -167,14 +175,14 @@ void debouncePullUp(int pinBoton, int *contador)
       }
       break;
 
-    case 3: //R
+    case BOT_RISING: //R
       if (pinEstado)
       {
-        estado = 1;
+        estado = BOT_UNO;
       }
       else
       {
-        estado = 0;
+        estado = BOT_CERO;
       }
       break;
     }
