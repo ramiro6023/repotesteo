@@ -5,10 +5,10 @@
 
 typedef enum estado_t //util para igualaciones pero no se puede sumar ni restar
 {
-  BOT_CERO = 53,
-  BOT_UNO = 21,
-  BOT_FALLING = 11,
-  BOT_RISING = 33
+  BOT_CERO,
+  BOT_UNO,
+  BOT_FALLING,
+  BOT_RISING
 };
 
 const int pinboton = 2;
