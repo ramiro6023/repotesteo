@@ -3,12 +3,12 @@
 #define T_DELAY2_US 500
 #define T_DELAY3_US 50
 
-typedef enum estado_t
+typedef enum estado_t //util para igualaciones pero no se puede sumar ni restar
 {
-  BOT_CERO,
-  BOT_UNO,
-  BOT_FALLING,
-  BOT_RISING
+  BOT_CERO = 53,
+  BOT_UNO = 21,
+  BOT_FALLING = 11,
+  BOT_RISING = 33
 };
 
 const int pinboton = 2;
@@ -164,7 +164,7 @@ void debouncePullUp(int pinBoton, int *contador)
       }
       else
       {
-        estado = BOT_UNO;
+        estado = BOT_CERO;
         *contador += 1;
         if (*contador > 2)
         {
